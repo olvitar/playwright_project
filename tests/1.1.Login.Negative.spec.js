@@ -1,11 +1,12 @@
 const { test, expect } = require('@playwright/test');
+const { URLs } = require('../Common/URLs');
 
 // Please note that the locator for the account button in the video differs from the current one,
 // as Wix has since updated it. We have made the necessary changes in the file accordingly.
 
 test('Login with valid credentials', async ({ page }) => {
 // Navigate to the Testing101 website
-await page.goto('https://www.testing101.net/');
+await page.goto(URLs.pageLinkHomePage);
 await page.waitForTimeout(5000);
 //Click on the Consent button on Cookie pop-up
 await page.getByLabel('Consent', { exact: true }).click();

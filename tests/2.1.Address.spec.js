@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { URLs } = require('../Common/URLs');
 
 // Please note: Some locators shown in the video are now outdated due to Wix updates.
 // Specifically, the iframe and account button locators have changed.
@@ -8,7 +9,7 @@ const { test, expect } = require('@playwright/test');
 
 test('Add a new Address in My Account', async ({ page }) => {
 // Navigate to the Testing101 website
-await page.goto('https://www.testing101.net/');
+await page.goto(URLs.pageLinkHomePage);
 await page.waitForTimeout(5000);
 //Click on the Consent button on Cookie pop-up
 await page.getByLabel('Consent', { exact: true }).click();

@@ -1,11 +1,13 @@
 const { test, expect } = require('@playwright/test');
+const { URLs } = require('../Common/URLs');
+
 
 const validEmail = 'axel.qa@gmail.com';
 const validPassword = '123qweASD';
 
 // Helper: navigate to the Login form
 async function openLoginForm(page) {
-    await page.goto('https://www.testing101.net/');
+    await page.goto(URLs.pageLinkHomePage);
     // Click Consent if the cookie pop-up is displayed
     const consentButton = page.getByLabel('Consent', { exact: true });
     if (await consentButton.isVisible()) {

@@ -1,11 +1,12 @@
 const { test, expect } = require('@playwright/test');
+const { URLs } = require('../Common/URLs');
 
 const validEmail = 'axel.qa@gmail.com';
 const validPassword = '123qweASD';
 
 // Helper: log in to the app
 async function validLogin(page) {
-    await page.goto('https://www.testing101.net/');
+    await page.goto(URLs.pageLinkHomePage);
         // Wait until the language selector is displayed
     await page.getByTestId('languages-container').getByLabel('English').waitFor();
         // Click Consent if the cookie pop-up is displayed

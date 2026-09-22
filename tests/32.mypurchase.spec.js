@@ -1,8 +1,9 @@
 const { test, expect } = require('@playwright/test');
+const { URLs } = require('../Common/URLs');
 
 test('E2E Purchase Flow for a Single Product', async ({ page }) => {
 
-    await page.goto('https://www.testing101.net/category/all-products');
+    await page.goto(URLs.pageLinkCategoryAllProducts);
         // Wait until the language selector is displayed
     await page.getByTestId('languages-container').getByLabel('English').waitFor();
         // Click Consent if the cookie pop-up is displayed

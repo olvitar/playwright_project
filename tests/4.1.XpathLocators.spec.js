@@ -1,12 +1,16 @@
 const { test, expect } = require('@playwright/test');
+const { URLs } = require('../Common/URLs');
 
 test('XPath Playwright Locators', async ({ page }) => {
 // Navigate to the Testing101 website
-await page.goto('https://www.testing101.net/playwrightlocators');
+await page.goto(URLs.pageLinkPlaywrightLocators);
 await page.waitForTimeout(5000);
 //Click on the Consent button on Cookie pop-up
-await page.getByLabel('Consent', { exact: true }).click();
-
+        // Click Consent if the cookie pop-up is displayed
+    const consentButton = page.getByLabel('Consent', { exact: true });
+    if (await consentButton.isVisible()) {
+        await consentButton.click();
+    };
 //Xpath Locators
 await page.locator('xpath=//select').click();
 //await page.locator('xpath=//button[@data-testid="buttonElement"]').click();

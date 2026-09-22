@@ -1,9 +1,10 @@
 const { test, expect } = require('@playwright/test');
+const { URLs } = require('../Common/URLs');
 
 test('End-to-End Purchase Flow for a Single Product', async ({ page }) => {
   test.setTimeout(50000);
 // Navigate to the Testing101 website
-await page.goto('https://www.testing101.net/category/all-products');
+await page.goto(URLs.pageLinkCategoryAllProducts);
 await page.waitForTimeout(5000);
 //Click on the Consent button on Cookie pop-up
 //await page.getByLabel('Consent', { exact: true }).click();

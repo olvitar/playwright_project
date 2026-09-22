@@ -1,8 +1,9 @@
 const { test, expect } = require('@playwright/test');
+const { URLs } = require('../Common/URLs');
 
 test('Login to the Testing101 website', async ({ page }) => {
     // Open the website
-    await page.goto('https://www.testing101.net/');
+    await page.goto(URLs.pageLinkHomePage);
 
 //Click on the Consent button on Cookie pop-up if pop-up is displayed   
     const consentButton = page.getByLabel('Consent', { exact: true }); 

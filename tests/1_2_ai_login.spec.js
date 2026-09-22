@@ -1,9 +1,10 @@
 const { test, expect } = require('@playwright/test');
+const { URLs } = require('../Common/URLs');
 
 test('Test Case 1 - Login with valid credentials', async ({ page }) => {
 
     // 1. Navigate to the Testing101 website
-    await page.goto('https://www.testing101.net/');
+    await page.goto(URLs.pageLinkHomePage);
 
     // 2. Wait until the languages-container is displayed
     await page.getByTestId('languages-container').getByLabel('English').waitFor();

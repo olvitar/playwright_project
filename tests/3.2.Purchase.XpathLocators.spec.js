@@ -1,4 +1,5 @@
 import {test,expect} from '@playwright/test';
+import { URLs } from '../Common/URLs';
 
 // Pay attention that we have updated the step to directly interact with the "View Cart" button
 // without switching to an iframe, as the Minicart is no longer embedded in one.
@@ -6,7 +7,7 @@ import {test,expect} from '@playwright/test';
 test('End to End Purchase flow with the XPath locators', async ({ page }) => {
   test.setTimeout(50000);
 // Navigate to the Testing101 website
-await page.goto('https://www.testing101.net/category/all-products');
+await page.goto(URLs.pageLinkCategoryAllProducts);
 await page.waitForTimeout(5000);
 
 //Click on the Consent button on Cookie pop-up
