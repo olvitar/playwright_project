@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { URLs } = require('../Common/URLs');
+import { consentPopup } from '../Common/ConsentPopup';
 
 const validEmail = 'axel.qa@gmail.com';
 const validPassword = '123qweASD';
@@ -9,11 +10,9 @@ async function validLogin(page) {
     await page.goto(URLs.pageLinkHomePage);
         // Wait until the language selector is displayed
     await page.getByTestId('languages-container').getByLabel('English').waitFor();
-        // Click Consent if the cookie pop-up is displayed
-    const consentButton = page.getByLabel('Consent', { exact: true });
-    if (await consentButton.isVisible()) {
-        await consentButton.click();
-    };
+        //Click on the Consent button on Cookie pop-up
+    const consentPopupWindow = new consentPopup(page);
+    await consentPopupWindow.clickButtonConsent();
     
     await page.getByRole('button', { name: 'Log In' }).click();
     await page.getByTestId('signUp.switchToSignUp').click();

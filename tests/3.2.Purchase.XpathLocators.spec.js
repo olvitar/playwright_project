@@ -1,5 +1,6 @@
 import {test,expect} from '@playwright/test';
 import { URLs } from '../Common/URLs';
+import { consentPopup } from '../Common/ConsentPopup';
 
 // Pay attention that we have updated the step to directly interact with the "View Cart" button
 // without switching to an iframe, as the Minicart is no longer embedded in one.
@@ -11,6 +12,8 @@ await page.goto(URLs.pageLinkCategoryAllProducts);
 await page.waitForTimeout(5000);
 
 //Click on the Consent button on Cookie pop-up
+const consentPopupWindow = new consentPopup(page);
+await consentPopupWindow.clickButtonConsent();
 //const buttonConsent = page.locator("xpath=//button[@aria-label='Consent']");
 //await buttonConsent.click();
 //Click on the Sorting option of the Filter tab
