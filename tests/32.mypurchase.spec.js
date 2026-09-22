@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('E2E purchase scenario', async ({ page }) => {
+test('E2E Purchase Flow for a Single Product'', async ({ page }) => {
 
     await page.goto('https://www.testing101.net/category/all-products');
         // Wait until the language selector is displayed
