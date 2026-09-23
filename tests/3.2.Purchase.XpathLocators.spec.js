@@ -6,7 +6,7 @@ import { consentPopup } from '../Common/ConsentPopup';
 // without switching to an iframe, as the Minicart is no longer embedded in one.
 
 test('End to End Purchase flow with the XPath locators', async ({ page }) => {
-  test.setTimeout(50000);
+  //test.setTimeout(50000);
 // Navigate to the Testing101 website
 await page.goto(URLs.pageLinkCategoryAllProducts);
 await page.waitForTimeout(5000);
@@ -14,8 +14,7 @@ await page.waitForTimeout(5000);
 //Click on the Consent button on Cookie pop-up
 const consentPopupWindow = new consentPopup(page);
 await consentPopupWindow.clickButtonConsent();
-//const buttonConsent = page.locator("xpath=//button[@aria-label='Consent']");
-//await buttonConsent.click();
+
 //Click on the Sorting option of the Filter tab
 const buttonSorting = page.locator("xpath=//span[text()='Sorting']");
 await buttonSorting.click();
