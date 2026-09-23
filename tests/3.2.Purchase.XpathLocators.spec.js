@@ -59,11 +59,11 @@ await dropdownCountryRegion.click();
 const dropdownOption = page.locator(checkoutPage.dropdownOption);
 await dropdownOption.click();
 const fieldAddress = page.locator(checkoutPage.fieldAddress);
-await fieldAddress.fill(testData.checkoutCustomerDetails.address);
+await fieldAddress.fill(testData.checkoutDeliveryDetails.address);
 const fieldCity = page.locator(checkoutPage.fieldCity);
-await fieldCity.fill(testData.checkoutCustomerDetails.city);
+await fieldCity.fill(testData.checkoutDeliveryDetails.city);
 const fieldZipCode = page.locator(checkoutPage.fieldZipCode);
-await fieldZipCode.fill(testData.checkoutCustomerDetails.zipCode);
+await fieldZipCode.fill(testData.checkoutDeliveryDetails.zipCode);
 const buttonContinueCheckout1 = page.locator(checkoutPage.buttonContinueChekout1);
 await buttonContinueCheckout1.click();
 //Checkout step 2
