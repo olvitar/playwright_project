@@ -8,10 +8,16 @@ export class testData {
         phone : '971234578'
 
     }
+
     static checkoutDeliveryDetails = 
     {
         address : '1234 Example Street',
         city : 'Lviv',
         zipCode : '10200'
+    }
+
+    static userLogin = {
+        emailValid : 'axel.qa@gmail.com',
+        passwordValid : '123qweASD'
     }
 }
