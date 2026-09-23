@@ -136,7 +136,7 @@ test('Login with an incorrect password', async ({ page }) => {
 
     // Enter incorrect password
     const fieldPassword = page.locator(loginPage.fieldPassword);
-    await fieldPassword.fill('WrongPassword123');
+    await fieldPassword.fill(testData.userLogin.passwordInvalid);
 
     // Click Login
     const buttonLogin = page.locator(loginPage.buttonLogin);
@@ -157,7 +157,7 @@ test('Login with a non-existent user email', async ({ page }) => {
     // Enter non-existent email
     const fieldEmail = page.locator(loginPage.fieldEmail);
     await fieldEmail.waitFor();
-    await fieldEmail.fill('nonexistent.user@example.com');
+    await fieldEmail.fill(testData.userLogin.emailNonExistent);
 
     // Enter valid password
     const fieldPassword = page.locator(loginPage.fieldPassword);

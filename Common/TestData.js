@@ -20,5 +20,7 @@ export class testData {
         emailValid : 'axel.qa@gmail.com',
         passwordValid : '123qweASD',
         emailInvalidFormat : 'axel.qa',
+        passwordInvalid : 'qweASD987',
+        emailNonExistent : 'nonexistent.user@example.com'
     }
 }
