@@ -3,7 +3,7 @@ export class pageHome {
     constructor(page) {
         this.page = page;
         // Define the XPath as properties here
-        this.buttonLanguageEn = 'xpath=//button[@aria-label="English" and @aria-current="true"]';
+        this.buttonLanguageEn = page.getByTestId('languages-container').getByLabel('English');
         //this.buttonLogin = 'xpath=//span[text()='Log In']';
 
     }

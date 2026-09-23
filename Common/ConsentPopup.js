@@ -11,11 +11,11 @@ export class consentPopup {
         this.buttonAcceptAll = "xpath=//button[contains(@class, 'fc-data-preferences-accept-all')]"; 
     }
     async clickButtonConsent() {
-        // Click Consent if the cookie pop-up is displayed
-    const consentButton = this.page.locator(this.buttonConsent);
-    if (await consentButton.isVisible()) {
-        await consentButton.click();
-    };
+        try {
+            await this.buttonConsent.click({ timeout: 3000 });
+        } catch {
+            // Consent popup was not displayed
+        }
     }
 
     async clickManageOptions() {
