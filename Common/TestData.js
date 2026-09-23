@@ -17,10 +17,12 @@ export class testData {
     }
 
     static userLogin = {
-        emailValid: process.env.TEST_USER_EMAIL,
-        passwordValid: process.env.TEST_USER_PASSWORD,
-        emailInvalidFormat: 'axel.qa',
-        passwordInvalid: 'qweASD987',
-        emailNonExistent: 'nonexistent.user@example.com'
+        //emailValid: process.env.TEST_USER_EMAIL,
+        //passwordValid: process.env.TEST_USER_PASSWORD,
+        emailValid : 'axel.qa@gmail.com',
+        passwordValid : '123qweASD',
+        emailInvalidFormat : 'axel.qa',
+        passwordInvalid : 'qweASD987',
+        emailNonExistent : 'nonexistent.user@example.com'
     }
 }

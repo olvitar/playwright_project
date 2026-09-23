@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { URLs } from '../Common/URLs';
 import { consentPopup } from '../Common/ConsentPopup';
-import { pageHome } from '../PageObject/PageHomePage';
-import { pageLogin } from '../PageObject/PageLogin';
-import { pageSignUp } from '../PageObject/PageSignUp';
+import { HomePage } from '../PageObject/HomePage';
+import { LoginPage } from '../PageObject/LoginPage';
+import { SignUpPage } from '../PageObject/SignUpPage';
 import { testData } from '../Common/TestData';
 
 
@@ -12,22 +12,22 @@ async function openLoginForm(page) {
 
     await page.goto(URLs.pageLinkHomePage);
 
-    // Click on the Consent button on Cookie pop-up
+/*     // Click on the Consent button on Cookie pop-up
     const consentPopupWindow = new consentPopup(page);
-    await consentPopupWindow.clickButtonConsent();
+    await consentPopupWindow.clickButtonConsent(); */
 
     // Wait until the language selector is displayed
-    const homePage = new pageHome(page);
+    const homePage = new HomePage(page);
     const buttonLanguage = page.locator(homePage.buttonLanguageEn);
     await buttonLanguage.waitFor();
 
     // Click Login button in the header
-    const loginPage = new pageLogin(page);
+    const loginPage = new LoginPage(page);
     const buttonLoginHeader = page.locator(loginPage.buttonLoginHeader);
     await buttonLoginHeader.click();
 
     // Click Login button on the Signup page
-    const signUpPage = new pageSignUp(page);
+    const signUpPage = new SignUpPage(page);
     const buttonLoginSignUp = page.locator(signUpPage.buttonLoginSignUp);
     await buttonLoginSignUp.click();
 }
