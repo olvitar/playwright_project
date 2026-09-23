@@ -1,6 +1,9 @@
 import {test,expect} from '@playwright/test';
 import { URLs } from '../Common/URLs';
 import { consentPopup } from '../Common/ConsentPopup';
+import { pagePLP } from '../PageObject/PagePLP';
+import { pageCartPage } from '../PageObject/PageCartPage';
+import { pageCheckout } from '../PageObject/PageCheckout';
 
 // Pay attention that we have updated the step to directly interact with the "View Cart" button
 // without switching to an iframe, as the Minicart is no longer embedded in one.
@@ -15,62 +18,65 @@ await page.waitForTimeout(5000);
 const consentPopupWindow = new consentPopup(page);
 await consentPopupWindow.clickButtonConsent();
 
+const plpPage = new pagePLP(page);
 //Click on the Sorting option of the Filter tab
-const buttonSorting = page.locator("xpath=//span[text()='Sorting']");
+const buttonSorting = page.locator(plpPage.buttonSorting);
 await buttonSorting.click();
 await page.waitForTimeout(5000);
 //Click on the Add To Cart button on the Americano product
-const buttonAddToCartPLP = page.locator("xpath=//div[@data-slug='americano']//span[text()='Add to Cart']");
+const buttonAddToCartPLP = page.locator(plpPage.buttonAddToCartPLP);
 await buttonAddToCartPLP.waitFor();
 await buttonAddToCartPLP.click();
 
 //we have updated the step to directly interact with the "View Cart" button
 // without switching to an iframe, as the Minicart is no longer embedded in one.
 // // Click on the View Cart button on the Minicart sidebar
-const buttonViewCart = page.locator('xpath=//button//span[text()="View Cart"]'); 
+const cartPage = new pageCartPage(page); 
+const buttonViewCart = page.locator(cartPage.buttonViewCart); 
 await buttonViewCart.waitFor();
 await buttonViewCart.click(); 
 //Cart Assertion
-const assertionEmptyCart = page.locator('xpath=//h3[@data-hook="EmptyState.title"]');
+const assertionEmptyCart = page.locator(cartPage.assertionEmptyCart);
 await expect(assertionEmptyCart).not.toBeVisible();
 //Click on the Checkout button on the My Cart page
-const buttonCheckout = page.locator("xpath=//span[text()='Checkout']");
+const buttonCheckout = page.locator(cartPage.buttonCheckout);
 await buttonCheckout.waitFor();
 await buttonCheckout.click();
 
 //Checkout step 1
-const fieldEmail = page.locator("xpath=//input[@aria-label='Email']");
+const checkoutPage = new pageCheckout(page);
+const fieldEmail = page.locator(checkoutPage.fieldEmail);
 await fieldEmail.fill('test@example.com');
-const fieldFirstName = page.locator("xpath=//input[@aria-label='First name']");
+const fieldFirstName = page.locator(checkoutPage.fieldFirstName);
 await fieldFirstName.fill('Testing');
-const fieldLastName = page.locator("xpath=//input[@aria-label='Last name']");
+const fieldLastName = page.locator(checkoutPage.fiedlLastName);
 await fieldLastName.fill('101');
-const fieldPhone = page.locator("xpath=//input[@type='phone']");
+const fieldPhone = page.locator(checkoutPage.fieldPhone);
 await fieldPhone.fill('971234578');
-const dropdownCountryRegion = page.locator("xpath=//div[@data-hook='form-field-country']");
+const dropdownCountryRegion = page.locator(checkoutPage.dropdownCountry);
 await dropdownCountryRegion.click();
-const dropdownOption = page.locator("xpath=//div[text()='Ukraine']");
+const dropdownOption = page.locator(checkoutPage.dropdownOption);
 await dropdownOption.click();
-const fieldAddress = page.locator("xpath=//div[@data-hook='form-field-addressLine']//input[@role='combobox']");
+const fieldAddress = page.locator(checkoutPage.fieldAddress);
 await fieldAddress.fill('1234 Example Street');
-const fieldCity = page.locator("xpath=//input[@aria-label='City']");
+const fieldCity = page.locator(checkoutPage.fieldCity);
 await fieldCity.fill('Lviv');
-const fieldZipCode = page.locator("xpath=//input[@aria-label='Zip / Postal code']");
+const fieldZipCode = page.locator(checkoutPage.fieldZipCode);
 await fieldZipCode.fill('12345');
-const buttonContinueCheckout1 = page.locator("xpath=//span[text()='Continue']");
+const buttonContinueCheckout1 = page.locator(checkoutPage.buttonContinueChekout1);
 await buttonContinueCheckout1.click();
 //Checkout step 2
-const buttonContinueCheckout2 = page.locator("xpath=//span[text()='Continue']");
+const buttonContinueCheckout2 = page.locator(checkoutPage.buttonContinueChekout2);
 await buttonContinueCheckout2.click();
 //Checkout step 3
-const buttonPlaceOrder = page.locator("xpath=//span[text()='Place Order & Pay']");
+const buttonPlaceOrder = page.locator(checkoutPage.buttonPlaceOrder);
 await buttonPlaceOrder.waitFor();
 await buttonPlaceOrder.click();
 await page.waitForTimeout(5000);
 
 //Assertion
 await expect(
-page.locator('xpath=//span[text()="You\'ll receive a confirmation email soon."]')
+page.locator(checkoutPage.messageConfirmation)
 ).toBeVisible({
   message: 'Error: Purchase confirmation message was not displayed.'
 });
