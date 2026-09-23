@@ -105,7 +105,7 @@ test('Login with an invalid email format', async ({ page }) => {
     // Enter invalid email format
     const fieldEmail = page.locator(loginPage.fieldEmail);
     await fieldEmail.waitFor();
-    await fieldEmail.fill('axel.qa');
+    await fieldEmail.fill(testData.userLogin.emailInvalidFormat);
 
     // Enter valid password
     const fieldPassword = page.locator(loginPage.fieldPassword);
