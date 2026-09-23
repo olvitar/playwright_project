@@ -6,7 +6,8 @@ import { pageLogin } from '../PageObject/PageLogin';
 import { pageSignUp } from '../PageObject/PageSignUp';
 import { testData } from '../Common/TestData';
 
-test('Login with valid credentials', async ({ page }) => {
+    // Helper: navigate to the Login form
+async function openLoginForm(page) {
     await page.goto(URLs.pageLinkHomePage);
     //Click on the Consent button on Cookie pop-up
     const consentPopupWindow = new consentPopup(page);
@@ -23,7 +24,11 @@ test('Login with valid credentials', async ({ page }) => {
     const signUpPage = new pageSignUp(page);
     const buttonLoginSignUp = page.locator(signUpPage.buttonLoginSignUp);
     await buttonLoginSignUp.click();
+}
 
+test('Login with valid credentials', async ({ page }) => {
+    await openLoginForm(page);
+    const loginPage = new pageLogin(page);
     const fieldEmail = page.locator(loginPage.fieldEmail);
     await fieldEmail.fill(testData.userLogin.emailValid);
 
