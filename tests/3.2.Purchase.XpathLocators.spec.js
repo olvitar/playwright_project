@@ -4,6 +4,7 @@ import { consentPopup } from '../Common/ConsentPopup';
 import { pagePLP } from '../PageObject/PagePLP';
 import { pageCartPage } from '../PageObject/PageCartPage';
 import { pageCheckout } from '../PageObject/PageCheckout';
+import { testData } from '../Common/TestData';
 
 // Pay attention that we have updated the step to directly interact with the "View Cart" button
 // without switching to an iframe, as the Minicart is no longer embedded in one.
@@ -46,23 +47,23 @@ await buttonCheckout.click();
 //Checkout step 1
 const checkoutPage = new pageCheckout(page);
 const fieldEmail = page.locator(checkoutPage.fieldEmail);
-await fieldEmail.fill('test@example.com');
+await fieldEmail.fill(testData.checkoutCustomerDetails.email);
 const fieldFirstName = page.locator(checkoutPage.fieldFirstName);
-await fieldFirstName.fill('Testing');
+await fieldFirstName.fill(testData.checkoutCustomerDetails.firstName);
 const fieldLastName = page.locator(checkoutPage.fiedlLastName);
-await fieldLastName.fill('101');
+await fieldLastName.fill(testData.checkoutCustomerDetails.lastName);
 const fieldPhone = page.locator(checkoutPage.fieldPhone);
-await fieldPhone.fill('971234578');
+await fieldPhone.fill(testData.checkoutCustomerDetails.phone);
 const dropdownCountryRegion = page.locator(checkoutPage.dropdownCountry);
 await dropdownCountryRegion.click();
 const dropdownOption = page.locator(checkoutPage.dropdownOption);
 await dropdownOption.click();
 const fieldAddress = page.locator(checkoutPage.fieldAddress);
-await fieldAddress.fill('1234 Example Street');
+await fieldAddress.fill(testData.checkoutCustomerDetails.address);
 const fieldCity = page.locator(checkoutPage.fieldCity);
-await fieldCity.fill('Lviv');
+await fieldCity.fill(testData.checkoutCustomerDetails.city);
 const fieldZipCode = page.locator(checkoutPage.fieldZipCode);
-await fieldZipCode.fill('12345');
+await fieldZipCode.fill(testData.checkoutCustomerDetails.zipCode);
 const buttonContinueCheckout1 = page.locator(checkoutPage.buttonContinueChekout1);
 await buttonContinueCheckout1.click();
 //Checkout step 2
