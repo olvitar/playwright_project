@@ -1,5 +1,3 @@
-import { expect } from '@playwright/test';
-
 export class ConsentPopup {
     constructor(page) {
         this.page = page;
@@ -11,14 +9,15 @@ export class ConsentPopup {
         this.buttonConsent = page.getByRole('button', {
             name: 'Consent'
         });
-    }
 
-    async clickButtonConsent() {
-        if (await this.buttonConsent.isVisible().catch(() => false)) {
-            await this.buttonConsent.click();
-        }
-    }
+        this.buttonManageOptions = page.getByText('Manage options', {
+            exact: true
+        });
 
+        this.buttonAcceptAll = page.locator(
+            "button[class*='fc-data-preferences-accept-all']"
+        );
+    }
 
     async clickButtonConsent() {
         if (await this.buttonConsent.isVisible().catch(() => false)) {
@@ -27,7 +26,7 @@ export class ConsentPopup {
     }
 
     async clickManageOptions() {
-        await expect(this.consentPopup).toBeVisible();
+        await this.consentPopup.waitFor({ state: 'visible' });
         await this.buttonManageOptions.click();
         await this.buttonAcceptAll.click();
     }

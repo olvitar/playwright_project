@@ -1,7 +1,10 @@
-export class pageSignUp {
+export class SignUpPage {
     constructor(page) {
         this.page = page;
-        this.buttonLoginSignUp = page.getByRole('button', { name: 'Log In' });
+
+        this.buttonLoginSignUp = page.getByRole('button', {
+            name: 'Log In'
+        });
     }
 
     async clickLogin() {

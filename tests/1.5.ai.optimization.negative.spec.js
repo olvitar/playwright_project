@@ -9,19 +9,20 @@ import { testData } from '../Common/TestData';
 async function openLoginForm(page) {
     await page.goto(URLs.pageLinkHomePage);
 
-    const consentPopupWindow = new ConsentPopup(page);
-    await consentPopupWindow.clickButtonConsent();
+    const consentPopup = new ConsentPopup(page);
+    await consentPopup.clickButtonConsent();
 
     const homePage = new HomePage(page);
     await expect(homePage.buttonLanguageEn).toBeVisible();
+
     await homePage.clickLogin();
 
-    const loginPage = new LoginPage(page);
     const signUpPage = new SignUpPage(page);
-
     await expect(signUpPage.buttonLoginSignUp).toBeVisible();
+
     await signUpPage.clickLogin();
 
+    const loginPage = new LoginPage(page);
     await expect(loginPage.fieldEmail).toBeVisible();
 
     return loginPage;
