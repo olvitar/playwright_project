@@ -1,13 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { URLs } from '../Common/URLs';
 import { consentPopup } from '../Common/ConsentPopup';
-import { pageHome } from '../PageObject/PageHomePage';
-import { pageLogin } from '../PageObject/PageLogin';
-import { pageSignUp } from '../PageObject/PageSignUp';
+import { HomePage } from '../PageObject/PageHomePage';
+import { LoginPage } from '../PageObject/PageLogin';
+import { SignUpPage } from '../PageObject/PageSignUp';
 import { testData } from '../Common/TestData';
-
-
-// Helper: navigate to the Login form
 
 async function openLoginForm(page) {
     await page.goto(URLs.pageLinkHomePage);
@@ -15,13 +12,13 @@ async function openLoginForm(page) {
     const consentPopupWindow = new consentPopup(page);
     await consentPopupWindow.clickButtonConsent();
 
-    const homePage = new pageHome(page);
+    const homePage = new HomePage(page);
     await expect(homePage.buttonLanguageEn).toBeVisible();
 
-    const loginPage = new pageLogin(page);
+    const loginPage = new LoginPage(page);
     await loginPage.clickHeaderLogin();
 
-    const signUpPage = new pageSignUp(page);
+    const signUpPage = new SignUpPage(page);
     await expect(signUpPage.buttonLoginSignUp).toBeVisible();
     await signUpPage.clickLogin();
 
@@ -29,8 +26,6 @@ async function openLoginForm(page) {
 
     return loginPage;
 }
-
-
 
 test('Login with empty fields', async ({ page }) => {
     const loginPage = await openLoginForm(page);
@@ -41,7 +36,6 @@ test('Login with empty fields', async ({ page }) => {
     await loginPage.expectEmptyPasswordError();
 });
 
-
 test('Login with empty email', async ({ page }) => {
     const loginPage = await openLoginForm(page);
 
@@ -49,9 +43,9 @@ test('Login with empty email', async ({ page }) => {
     await loginPage.clickLogin();
 
     await loginPage.expectEmptyEmailError();
-    await expect(page.getByLabel('Email')).toHaveJSProperty('validity.valid', false);
+    await expect(loginPage.fieldEmail)
+        .toHaveJSProperty('validity.valid', false);
 });
-
 
 test('Login with empty password', async ({ page }) => {
     const loginPage = await openLoginForm(page);
@@ -60,8 +54,7 @@ test('Login with empty password', async ({ page }) => {
     await loginPage.clickLogin();
 
     await loginPage.expectEmptyPasswordError();
-
-    await expect(page.getByLabel('Password'))
+    await expect(loginPage.fieldPassword)
         .toHaveJSProperty('validity.valid', false);
 });
 
@@ -85,7 +78,6 @@ test('Login with incorrect password', async ({ page }) => {
     await loginPage.expectIncorrectCredentialsError();
 });
 
-
 test('Login with non-existent email', async ({ page }) => {
     const loginPage = await openLoginForm(page);
 
@@ -95,4 +87,3 @@ test('Login with non-existent email', async ({ page }) => {
 
     await loginPage.expectNonExistentEmailError();
 });
-

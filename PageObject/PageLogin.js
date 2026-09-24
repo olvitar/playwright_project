@@ -1,13 +1,12 @@
 import { expect } from '@playwright/test';
 
-export class pageLogin {
+export class LoginPage {
     constructor(page) {
         this.page = page;
-        // Define the XPath as properties here
-        //this.buttonLanguageEn = 'xpath=//button[@aria-label="English" and @aria-current="true"]';
+        // Define the locators 
         this.buttonLoginHeader = page.getByRole('button', { name: 'Log In' });
-        this.fieldEmail = page.locator('xpath=//input[@type="email"]');
-        this.fieldPassword = page.locator('xpath=//input[@type="password"]');
+        this.fieldEmail = page.getByLabel('Email');
+        this.fieldPassword = page.getByLabel('Password');
         this.buttonLogin = page.locator('form').getByRole('button', { name: 'Log In' });
  
         // Error messages
