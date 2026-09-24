@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { URLs } from '../Common/URLs';
-import { consentPopup } from '../Common/ConsentPopup';
-import { HomePage } from '../PageObject/PageHomePage';
-import { LoginPage } from '../PageObject/PageLogin';
-import { SignUpPage } from '../PageObject/PageSignUp';
+import { ConsentPopup } from '../Common/ConsentPopup';
+import { HomePage } from '../PageObject/HomePage';
+import { LoginPage } from '../PageObject/LoginPage';
+import { SignUpPage } from '../PageObject/SignUpPage';
 import { testData } from '../Common/TestData';
 
 async function openLoginForm(page) {

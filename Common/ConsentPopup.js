@@ -2,6 +2,8 @@ import { expect } from '@playwright/test';
 
 export class ConsentPopup {
     constructor(page) {
+        this.page = page;
+
         this.consentPopup = page.getByRole('heading', {
             name: 'This site asks for consent to use your data'
         });
@@ -9,15 +11,14 @@ export class ConsentPopup {
         this.buttonConsent = page.getByRole('button', {
             name: 'Consent'
         });
-
-        this.buttonManageOptions = page.getByText('Manage options', {
-            exact: true
-        });
-
-        this.buttonAcceptAll = page.locator(
-            "button[class*='fc-data-preferences-accept-all']"
-        );
     }
+
+    async clickButtonConsent() {
+        if (await this.buttonConsent.isVisible().catch(() => false)) {
+            await this.buttonConsent.click();
+        }
+    }
+
 
     async clickButtonConsent() {
         if (await this.buttonConsent.isVisible().catch(() => false)) {
