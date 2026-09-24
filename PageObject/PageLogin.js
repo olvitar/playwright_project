@@ -4,7 +4,7 @@ export class LoginPage {
     constructor(page) {
         this.page = page;
         // Define the locators 
-        this.buttonLoginHeader = page.getByRole('button', { name: 'Log In' });
+       // this.buttonLoginHeader = page.getByRole('button', { name: 'Log In' });
         this.fieldEmail = page.getByLabel('Email');
         this.fieldPassword = page.getByLabel('Password');
         this.buttonLogin = page.locator('form').getByRole('button', { name: 'Log In' });
@@ -29,9 +29,9 @@ export class LoginPage {
         await this.buttonLogin.click();
     }
 
-    async clickHeaderLogin() {
+/*     async clickHeaderLogin() {
     await this.buttonLoginHeader.click();
-    }
+    } */
 
     async expectInvalidEmailError() {
         await expect(this.errorInvalidEmail).toBeVisible();

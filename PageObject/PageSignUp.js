@@ -1,11 +1,10 @@
-export class SignUpPage {
-
+export class pageSignUp {
     constructor(page) {
         this.page = page;
-        // Define the XPath as properties here
         this.buttonLoginSignUp = page.getByRole('button', { name: 'Log In' });
     }
+
     async clickLogin() {
-    await this.buttonLoginSignUp.click();
-    }   
+        await this.buttonLoginSignUp.click();
+    }
 }
