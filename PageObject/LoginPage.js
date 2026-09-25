@@ -3,14 +3,14 @@ import { expect } from '@playwright/test';
 export class LoginPage {
     constructor(page) {
         this.page = page;
-
+            //Locators
         this.fieldEmail = page.getByLabel('Email');
         this.fieldPassword = page.getByLabel('Password');
 
         this.buttonLogin = page
             .locator('form')
             .getByRole('button', { name: 'Log In' });
-
+            //Messages
         this.errorInvalidEmail = page.getByText(
             'Double check your email and try again.'
         );

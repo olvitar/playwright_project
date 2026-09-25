@@ -23,4 +23,19 @@ export class testData {
         passwordInvalid: 'qweASD987',
         emailNonExistent: 'nonexistent.user@example.com'
     }
+
+    static userAddress = {
+        firstName: 'Axel',
+        lastName: 'Foley',
+        company: 'DataArt',
+        address: 'Tulips ave',
+        apartment: '155 apartment',
+        suite: '7 suite',
+        floor: '16 floor',
+        city: 'Lviv',
+        zipCode: '01001',
+        country: 'Ukraine',
+        phone: '+3809712345678'
+    }
+
 }

@@ -11,9 +11,9 @@ async function validLogin(page) {
         // Wait until the language selector is displayed
     await page.getByTestId('languages-container').getByLabel('English').waitFor();
         //Click on the Consent button on Cookie pop-up
-    const consentPopupWindow = new consentPopup(page);
+/*     const consentPopupWindow = new consentPopup(page);
     await consentPopupWindow.clickButtonConsent();
-    
+     */
     await page.getByRole('button', { name: 'Log In' }).click();
     await page.getByTestId('signUp.switchToSignUp').click();
     await page.getByLabel('Email').fill(validEmail);
