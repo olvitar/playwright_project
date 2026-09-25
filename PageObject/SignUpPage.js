@@ -3,7 +3,7 @@ export class SignUpPage {
         this.page = page;
 
         this.buttonLoginSignUp = page.getByRole('button', {
-            name: 'Log In'
+            name: 'Already a member? Log In'
         });
     }
 
