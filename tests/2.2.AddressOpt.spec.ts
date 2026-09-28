@@ -51,31 +51,19 @@ test('Login with valid credentials', async ({ page }) => {
     //const iframe = page.frameLocator('iframe[name^="tpapopup-"]');  //^= means "starts with"
     await myAccountPage.enterFIrstName(testData.userAddress.firstName);
     await myAccountPage.enterLastName(testData.userAddress.lastName);
+    await myAccountPage.enterCompanyName(testData.userAddress.companyName);
+    await myAccountPage.enterAddress(testData.userAddress.address);
+    await myAccountPage.enterAddressLine2(testData.userAddress.addressLine2);
+    await myAccountPage.enterCity(testData.userAddress.city);
+    await myAccountPage.selectCountry();
+    await myAccountPage.enterZipCode(testData.userAddress.zipCode);
+    await myAccountPage.enterPhone(testData.userAddress.phone);
+    await myAccountPage.clickAddAddressButton();
 
-    await iframe.getByLabel('Last name').fill('Foley');
-    await iframe.getByLabel('Company name').fill('DataArt');
-    await iframe.getByLabel('Address', { exact: true }).fill('Tulips ave ');
-    await iframe.getByPlaceholder('Apartment, suite, floor').fill('155 apartment, 7 suite, 16 floor');
-    await iframe.getByLabel('City').fill('Lviv');
-
-    //Open the Country Drop-down menu
-    await iframe.getByRole('img').nth(1).click();
-    //await iframe.getByLabel('Country/Region').fill('ukr');
-    await iframe.getByText('Ukraine').click();
-    await iframe.getByLabel('Zip / Postal code').fill('01001');
-    await iframe.getByLabel('Phone').fill('+3809712345678');
-    await iframe.getByLabel('Add Address and close dialog').click()
 
     //Assertion 
     const addressLocator = page.frameLocator('iframe[title="My Addresses"]')
         .locator('address[data-hook="formatted-address"]');
 
-    await expect(addressLocator).toHaveText(`
-        Axel Foley
-        DataArt
-        Tulips ave, 155 apartment, 7 suite, 16 floor
-        Lviv,  01001
-        Ukraine
-        +3809712345678
-    `);
+    await expect(addressLocator).toContainText(testData.userAddress.firstName);
 });

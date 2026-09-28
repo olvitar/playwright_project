@@ -27,11 +27,9 @@ export class testData {
     static userAddress = {
         firstName: 'Axel',
         lastName: 'Foley',
-        company: 'DataArt',
+        companyName: 'DataArt',
         address: 'Tulips ave',
-        apartment: '155 apartment',
-        suite: '7 suite',
-        floor: '16 floor',
+        addressLine2: '155 apartment, 7 suite, 16 floor',
         city: 'Lviv',
         zipCode: '01001',
         country: 'Ukraine',
