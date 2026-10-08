@@ -46,7 +46,7 @@ test('Login with valid credentials', async ({ page }) => {
     await myAccountPage.clickMyAddresses();
     await myAccountPage.clickIframeMyAddresses();
     
-    await page.pause(); // Pause for debugging
+    //await page.pause(); // Pause for debugging
     //Start interaction with the iframe, which name changes dynamically
     //const iframe = page.frameLocator('iframe[name^="tpapopup-"]');  //^= means "starts with"
     await myAccountPage.enterFIrstName(testData.userAddress.firstName);
