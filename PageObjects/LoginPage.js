@@ -31,7 +31,7 @@ export class LoginPage {
             "This email doesn't match any account. Try again."
         );
     }
-
+    //Actions
     async enterEmail(email) {
         await this.fieldEmail.fill(email);
     }

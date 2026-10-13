@@ -31,3 +31,10 @@ export class ConsentPopup {
         await this.buttonAcceptAll.click();
     }
 }
+
+export const consentPopup = ConsentPopup;
+export default ConsentPopup;
+
+if (typeof module !== 'undefined') {
+    module.exports = { ConsentPopup, consentPopup, default: ConsentPopup };
+}

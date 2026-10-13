@@ -6,7 +6,7 @@ test('Login to the Testing101 website', async ({ page }) => {
     // Open the website
     await page.goto(URLs.pageLinkHomePage);
 
-        //Click on the Consent button on Cookie pop-up
+    // Click on the Consent button on Cookie pop-up
     const consentPopupWindow = new consentPopup(page);
     await consentPopupWindow.clickButtonConsent();
 

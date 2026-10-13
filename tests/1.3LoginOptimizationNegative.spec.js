@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { URLs } from '../Common/URLs';
 import { consentPopup } from '../Common/ConsentPopup';
-import { pageHome } from '../PageObject/PageHomePage';
-import { pageLogin } from '../PageObject/PageLogin';
-import { pageSignUp } from '../PageObject/PageSignUp';
+import { HomePage } from '../PageObjects/HomePage';
+import { LoginPage } from '../PageObjects/LoginPage';
+import { SignUpPage } from '../PageObjects/SignUpPage';
 import { testData } from '../Common/TestData';
 
 
@@ -17,19 +17,15 @@ async function openLoginForm(page) {
     await consentPopupWindow.clickButtonConsent();
 
     // Wait until the language selector is displayed
-    const homePage = new pageHome(page);
-    const buttonLanguage = page.locator(homePage.buttonLanguageEn);
-    await buttonLanguage.waitFor();
+    const homePage = new HomePage(page);
+    await homePage.buttonLanguageEn.waitFor();
 
     // Click Login button in the header
-    const loginPage = new pageLogin(page);
-    const buttonLoginHeader = page.locator(loginPage.buttonLoginHeader);
-    await buttonLoginHeader.click();
+    await homePage.clickLogin();
 
     // Click Login button on the Signup page
-    const signUpPage = new pageSignUp(page);
-    const buttonLoginSignUp = page.locator(signUpPage.buttonLoginSignUp);
-    await buttonLoginSignUp.click();
+    const signUpPage = new SignUpPage(page);
+    await signUpPage.clickLogin();
 }
 
 
@@ -38,11 +34,10 @@ test('Login with an empty login form', async ({ page }) => {
 
     await openLoginForm(page);
 
-    const loginPage = new pageLogin(page);
+    const loginPage = new LoginPage(page);
 
     // Click Login without entering email or password
-    const buttonLogin = page.locator(loginPage.buttonLogin);
-    await buttonLogin.click();
+    await loginPage.buttonLogin.click();
 
     // Assert that the Email validation message
     await expect(page.getByText('Email cannot be blank')).toBeVisible();
@@ -56,15 +51,13 @@ test('Login with an empty email', async ({ page }) => {
 
     await openLoginForm(page);
 
-    const loginPage = new pageLogin(page);
+    const loginPage = new LoginPage(page);
 
     // Enter valid password
-    const fieldPassword = page.locator(loginPage.fieldPassword);
-    await fieldPassword.fill(testData.userLogin.passwordValid);
+    await loginPage.fieldPassword.fill(testData.userLogin.passwordValid);
 
     // Leave Email empty and click Login
-    const buttonLogin = page.locator(loginPage.buttonLogin);
-    await buttonLogin.click();
+    await loginPage.buttonLogin.click();
 
     // Assert that the Email field is invalid
     await expect(page.getByLabel('Email')).toHaveJSProperty('validity.valid', false);
@@ -78,15 +71,13 @@ test('Login with an empty password', async ({ page }) => {
 
     await openLoginForm(page);
 
-    const loginPage = new pageLogin(page);
+    const loginPage = new LoginPage(page);
 
     // Enter valid email
-    const fieldEmail = page.locator(loginPage.fieldEmail);
-    await fieldEmail.fill(testData.userLogin.emailValid);
+    await loginPage.fieldEmail.fill(testData.userLogin.emailValid);
 
     // Leave Password empty and click Login
-    const buttonLogin = page.locator(loginPage.buttonLogin);
-    await buttonLogin.click();
+    await loginPage.buttonLogin.click();
 
     // Assert that the Password field is invalid
     await expect(page.getByLabel('Password')).toHaveJSProperty('validity.valid', false);
@@ -100,20 +91,17 @@ test('Login with an invalid email format', async ({ page }) => {
 
     await openLoginForm(page);
 
-    const loginPage = new pageLogin(page);
+    const loginPage = new LoginPage(page);
 
     // Enter invalid email format
-    const fieldEmail = page.locator(loginPage.fieldEmail);
-    await fieldEmail.waitFor();
-    await fieldEmail.fill(testData.userLogin.emailInvalidFormat);
+    await loginPage.fieldEmail.waitFor();
+    await loginPage.fieldEmail.fill(testData.userLogin.emailInvalidFormat);
 
     // Enter valid password
-    const fieldPassword = page.locator(loginPage.fieldPassword);
-    await fieldPassword.fill(testData.userLogin.passwordValid);
+    await loginPage.fieldPassword.fill(testData.userLogin.passwordValid);
 
     // Click Login
-    const buttonLogin = page.locator(loginPage.buttonLogin);
-    await buttonLogin.click();
+    await loginPage.buttonLogin.click();
 
     // Assert that the Email field is invalid
     await expect(page.getByLabel('Email')).toHaveJSProperty('validity.valid', false);
@@ -127,20 +115,17 @@ test('Login with an incorrect password', async ({ page }) => {
 
     await openLoginForm(page);
 
-    const loginPage = new pageLogin(page);
+    const loginPage = new LoginPage(page);
 
     // Enter valid email
-    const fieldEmail = page.locator(loginPage.fieldEmail);
-    await fieldEmail.waitFor();
-    await fieldEmail.fill(testData.userLogin.emailValid);
+    await loginPage.fieldEmail.waitFor();
+    await loginPage.fieldEmail.fill(testData.userLogin.emailValid);
 
     // Enter incorrect password
-    const fieldPassword = page.locator(loginPage.fieldPassword);
-    await fieldPassword.fill(testData.userLogin.passwordInvalid);
+    await loginPage.fieldPassword.fill(testData.userLogin.passwordInvalid);
 
     // Click Login
-    const buttonLogin = page.locator(loginPage.buttonLogin);
-    await buttonLogin.click();
+    await loginPage.buttonLogin.click();
 
     // Assert that the Password validation message
     await expect(page.getByText('Wrong email or password')).toBeVisible();
@@ -152,20 +137,17 @@ test('Login with a non-existent user email', async ({ page }) => {
 
     await openLoginForm(page);
 
-    const loginPage = new pageLogin(page);
+    const loginPage = new LoginPage(page);
 
     // Enter non-existent email
-    const fieldEmail = page.locator(loginPage.fieldEmail);
-    await fieldEmail.waitFor();
-    await fieldEmail.fill(testData.userLogin.emailNonExistent);
+    await loginPage.fieldEmail.waitFor();
+    await loginPage.fieldEmail.fill(testData.userLogin.emailNonExistent);
 
     // Enter valid password
-    const fieldPassword = page.locator(loginPage.fieldPassword);
-    await fieldPassword.fill(testData.userLogin.passwordValid);
+    await loginPage.fieldPassword.fill(testData.userLogin.passwordValid);
 
     // Click Login
-    const buttonLogin = page.locator(loginPage.buttonLogin);
-    await buttonLogin.click();
+    await loginPage.buttonLogin.click();
 
     // Assert that the Password validation message
     await expect(page.getByText("This email doesn't match any account. Try again.")).toBeVisible();

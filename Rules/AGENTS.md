@@ -15,7 +15,7 @@ These rules describe patterns already present in this repository.
 ## Shared data and page objects
 
 - Keep reusable test values in `Common/TestData.js`; credentials are read from environment variables there.
-- Existing page objects are in `PageObject/`. Follow a page object's current pattern when extending it: store locators on the class and expose async methods for repeated interactions or assertions.
+- Existing page objects are in `PageObjects/`. Follow a page object's current pattern when extending it: store locators on the class and expose async methods for repeated interactions or assertions.
 - Keep site URLs in `Common/URLs.js` rather than duplicating them in tests.
 
 ## Project commands and configuration

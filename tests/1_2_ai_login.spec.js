@@ -1,12 +1,17 @@
 const { test, expect } = require('@playwright/test');
 const { URLs } = require('../Common/URLs');
+const { consentPopup } = require('../Common/ConsentPopup');
 
 test('Test Case 1 - Login with valid credentials', async ({ page }) => {
 
     // 1. Navigate to the Testing101 website
     await page.goto(URLs.pageLinkHomePage);
 
-    // 2. Wait until the languages-container is displayed
+    // 2. Click on the consent button if the cookie pop-up is displayed
+    const consentPopupWindow = new consentPopup(page);
+    await consentPopupWindow.clickButtonConsent();
+
+    // 3. Wait until the languages-container is displayed
     await page.getByTestId('languages-container').getByLabel('English').waitFor();
 
     // 3. Click on the Login button in the header

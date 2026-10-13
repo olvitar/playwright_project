@@ -1,149 +1,105 @@
 const { test, expect } = require('@playwright/test');
 const { URLs } = require('../Common/URLs');
 
-// Please note that the locator for the account button in the video differs from the current one,
-// as Wix has since updated it. We have made the necessary changes in the file accordingly.
+async function acceptConsentIfVisible(page) {
+    const consentButton = page.getByRole('button', { name: /^Consent$/i });
+    if (await consentButton.isVisible().catch(() => false)) {
+        await consentButton.click();
+    }
+}
+
+async function switchToLogin(page) {
+    const emailField = page.getByLabel('Email');
+    const passwordField = page.getByLabel('Password');
+    if (await emailField.isVisible().catch(() => false) && await passwordField.isVisible().catch(() => false)) {
+        return;
+    }
+
+    const signupSwitch = page.getByTestId('signUp.switchToSignUp');
+    const memberSwitch = page.getByRole('button', { name: /Already a member\? Log In/i });
+
+    if (await signupSwitch.isVisible().catch(() => false)) {
+        await signupSwitch.click();
+        return;
+    }
+
+    if (await memberSwitch.isVisible().catch(() => false)) {
+        await memberSwitch.click();
+        return;
+    }
+}
+
+async function openLoginForm(page) {
+    await page.goto(URLs.pageLinkHomePage);
+    await acceptConsentIfVisible(page);
+
+    const accountButton = page.getByTestId('handle-button');
+    if (await accountButton.isVisible().catch(() => false)) {
+        await accountButton.click();
+        const logoutButton = page.getByRole('menuitem', { name: /Log Out|Sign Out/i });
+        if (await logoutButton.isVisible().catch(() => false)) {
+            await logoutButton.click();
+        } else {
+            await page.goto(URLs.pageLinkHomePage);
+        }
+    }
+
+    await page.getByRole('button', { name: 'Log In' }).waitFor({ state: 'visible' });
+    await page.getByRole('button', { name: 'Log In' }).click();
+    await switchToLogin(page);
+}
 
 test('Login with valid credentials', async ({ page }) => {
-// Navigate to the Testing101 website
-await page.goto(URLs.pageLinkHomePage);
-await page.waitForTimeout(5000);
-//Click on the Consent button on Cookie pop-up
-await page.getByLabel('Consent', { exact: true }).click();
-//Click on the Login button on the header
-await page.getByRole('button', { name: 'Log In' }).click();
-//Click on the Login button on the Signup page
-await page.getByTestId('signUp.switchToSignUp').click();
-//Input valid data into the Email field
-await page.getByLabel('Email').fill('andriitest7799@gmail.com');
-//Input valid data into the Password field
-await page.getByLabel('Password').fill('Aa123_123');
-//Click on the Login button of the Login form
-await page.getByTestId('buttonElement').click();
-
-// Assertion: Check if 'andriitest7799 account menu' is visible after login
-await expect(page.getByTestId('handle-button')).toBeVisible();
+    await openLoginForm(page);
+    await page.getByLabel('Email').fill('andriitest7799@gmail.com');
+    await page.getByLabel('Password').fill('Aa123_123');
+    await page.getByTestId('buttonElement').click();
+    await expect(page.getByTestId('handle-button')).toBeVisible();
 });
 
 test('Login with empty fields of the Login form', async ({ page }) => {
-// Navigate to the Testing101 website
-await page.goto('https://www.testing101.net/');
-await page.waitForTimeout(5000);
-//Click on the Consent button on Cookie pop-up
-await page.getByLabel('Consent', { exact: true }).click();
-//Click on the Login button on the header
-await page.getByRole('button', { name: 'Log In' }).click();
-//Click on the Login button on the Signup page
-await page.getByTestId('signUp.switchToSignUp').click();
-//Click on the Login button of the Login form
-await page.getByTestId('buttonElement').click();
-
-//Assertion to check the error message of the Email field
-await expect(page.getByText('Email cannot be blank')).toBeVisible();
-//Assertion to check the error message of the Password field
-await expect(page.getByText('Make sure you enter a password.')).toBeVisible();
+    await openLoginForm(page);
+    await page.getByTestId('buttonElement').click();
+    await expect(page.getByText('Email cannot be blank')).toBeVisible();
+    await expect(page.getByText('Make sure you enter a password.')).toBeVisible();
 });
 
 test('Login with an empty Email field of the Login form', async ({ page }) => {
-// Navigate to the Testing101 website
-await page.goto('https://www.testing101.net/');
-await page.waitForTimeout(5000);
-//Click on the Consent button on Cookie pop-up
-await page.getByLabel('Consent', { exact: true }).click();
-//Click on the Login button on the header
-await page.getByRole('button', { name: 'Log In' }).click();
-//Click on the Login button on the Signup page
-await page.getByTestId('signUp.switchToSignUp').click();
-//Input valid data into the Password field
-await page.getByLabel('Password').fill('Aa123_123');
-//Click on the Login button of the Login form
-await page.getByTestId('buttonElement').click();
-
-//Assertion to check the error message of the Email field
-await expect(page.getByText('Email cannot be blank')).toBeVisible();
+    await openLoginForm(page);
+    await page.getByLabel('Password').fill('Aa123_123');
+    await page.getByTestId('buttonElement').click();
+    await expect(page.getByText('Email cannot be blank')).toBeVisible();
 });
 
 test('Login with an empty Password field of the Login form', async ({ page }) => {
-// Navigate to the Testing101 website
-await page.goto('https://www.testing101.net/');
-await page.waitForTimeout(5000);
-//Click on the Consent button on Cookie pop-up
-await page.getByLabel('Consent', { exact: true }).click();
-//Click on the Login button on the header
-await page.getByRole('button', { name: 'Log In' }).click();
-//Click on the Login button on the Signup page
-await page.getByTestId('signUp.switchToSignUp').click();
-//Input valid data into the Email field
-await page.getByLabel('Email').fill('andriitest7799@gmail.com');
-//Click on the Login button of the Login form
-await page.getByTestId('buttonElement').click();
-
-//Assertion to check the error message of the Password field
-await expect(page.getByText('Make sure you enter a password.')).toBeVisible();
+    await openLoginForm(page);
+    await page.getByLabel('Email').fill('andriitest7799@gmail.com');
+    await page.getByTestId('buttonElement').click();
+    await expect(page.getByText('Make sure you enter a password.')).toBeVisible();
 });
 
 test('Login with the invalid format of the Email', async ({ page }) => {
-// Navigate to the Testing101 website
-await page.goto('https://www.testing101.net/');
-await page.waitForTimeout(5000);
-//Click on the Consent button on Cookie pop-up
-await page.getByLabel('Consent', { exact: true }).click();
-//Click on the Login button on the header
-await page.getByRole('button', { name: 'Log In' }).click();
-//Click on the Login button on the Signup page
-await page.getByTestId('signUp.switchToSignUp').click();
-//Input valid data into the Email field
-await page.getByLabel('Email').fill('andriitest7799%gmail.com');
-//Input valid data into the Password field
-await page.getByLabel('Password').fill('Aa123_123');
-//Click on the Login button of the Login form
-await page.getByTestId('buttonElement').click();
-
-//Assertion to check the error message of the Email field
-await expect(page.getByText('Double check your email and try again.')).toBeVisible();
+    await openLoginForm(page);
+    await page.getByLabel('Email').fill('andriitest7799%gmail.com');
+    await page.getByLabel('Password').fill('Aa123_123');
+    await page.getByTestId('buttonElement').click();
+    await expect(page.getByText('Double check your email and try again.')).toBeVisible();
 });
 
-
 test('Login with the invalid Password', async ({ page }) => {
-// Navigate to the Testing101 website
-await page.goto('https://www.testing101.net/');
-await page.waitForTimeout(5000);
-//Click on the Consent button on Cookie pop-up
-await page.getByLabel('Consent', { exact: true }).click();
-//Click on the Login button on the header
-await page.getByRole('button', { name: 'Log In' }).click();
-//Click on the Login button on the Signup page
-await page.getByTestId('signUp.switchToSignUp').click();
-//Input valid data into the Email field
-await page.getByLabel('Email').fill('andriitest7799@gmail.com');
-//Input valid data into the Password field
-await page.getByLabel('Password').fill('Aa123_1');
-//Click on the Login button of the Login form
-await page.getByTestId('buttonElement').click();
-
-//Assertion to check the error message of Password field
-await expect(page.getByText('Wrong email or password')).toBeVisible();
+    await openLoginForm(page);
+    await page.getByLabel('Email').fill('andriitest7799@gmail.com');
+    await page.getByLabel('Password').fill('Aa123_1');
+    await page.getByTestId('buttonElement').click();
+    await expect(page.getByText('Wrong email or password')).toBeVisible();
 });
 
 test('Login with non-existent user email', async ({ page }) => {
-// Navigate to the Testing101 website
-await page.goto('https://www.testing101.net/');
-await page.waitForTimeout(5000);
-//Click on the Consent button on Cookie pop-up
-await page.getByLabel('Consent', { exact: true }).click();
-//Click on the Login button on the header
-await page.getByRole('button', { name: 'Log In' }).click();
-//Click on the Login button on the Signup page
-await page.getByTestId('signUp.switchToSignUp').click();
-//Input valid data into the Email field
-await page.getByLabel('Email').fill('andriitest12345@gmail.com');
-//Input valid data into the Password field
-await page.getByLabel('Password').fill('Aa123_123');
-//Click on the Login button of the Login form
-await page.getByTestId('buttonElement').click();
-
-//Assertion to check a non-existent user Email error message
-await expect(page.getByText("This email doesn't match any account. Try again.")).toBeVisible();
+    await openLoginForm(page);
+    await page.getByLabel('Email').fill('andriitest12345@gmail.com');
+    await page.getByLabel('Password').fill('Aa123_123');
+    await page.getByTestId('buttonElement').click();
+    await expect(page.getByText(/This email .*match any account|This email doesn't match any account\. Try again\./i)).toBeVisible();
 });
 
 

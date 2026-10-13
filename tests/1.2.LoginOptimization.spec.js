@@ -1,17 +1,17 @@
 import { test, expect } from '@playwright/test';
 import { URLs } from '../Common/URLs';
 import { ConsentPopup } from '../Common/ConsentPopup';
-import { HomePage } from '../PageObject/HomePage';
-import { LoginPage } from '../PageObject/LoginPage';
-import { SignUpPage } from '../PageObject/SignUpPage';
+import { HomePage } from '../PageObjects/HomePage';
+import { LoginPage } from '../PageObjects/LoginPage';
+import { SignUpPage } from '../PageObjects/SignUpPage';
 import { testData } from '../Common/TestData';
 
     // Helper: navigate to the Login form
 async function openLoginForm(page) {
     await page.goto(URLs.pageLinkHomePage);
 
-    //const consentPopup = new ConsentPopup(page);
-    //await consentPopup.clickButtonConsent();
+    const consentPopup = new ConsentPopup(page);
+    await consentPopup.clickButtonConsent();
 
     const homePage = new HomePage(page);
     await expect(homePage.buttonLanguageEn).toBeVisible();
@@ -38,4 +38,3 @@ test('Login with valid credentials', async ({ page }) => {
         // Assertion: Check if 'axel.qa account menu' is visible after login
     await expect(page.getByTestId('handle-button')).toBeVisible();
 });
-

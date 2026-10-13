@@ -6,8 +6,11 @@ test('End-to-End Purchase Flow for a Single Product', async ({ page }) => {
 // Navigate to the Testing101 website
 await page.goto(URLs.pageLinkCategoryAllProducts);
 await page.waitForTimeout(5000);
-//Click on the Consent button on Cookie pop-up
-//await page.getByLabel('Consent', { exact: true }).click();
+
+const consentButton = page.getByLabel('Consent', { exact: true });
+if (await consentButton.isVisible()) {
+  await consentButton.click();
+}
 
 //Click on the Sorting option of the Filter tab
 await page.getByRole('link', { name: 'Sorting' }).click();

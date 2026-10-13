@@ -1,18 +1,18 @@
 import { test, expect } from '@playwright/test';
 import { URLs } from '../Common/URLs';
 import { ConsentPopup } from '../Common/ConsentPopup';
-import { HomePage } from '../PageObject/HomePage';
-import { LoginPage } from '../PageObject/LoginPage';
-import { SignUpPage } from '../PageObject/SignUpPage';
+import { HomePage } from '../PageObjects/HomePage';
+import { LoginPage } from '../PageObjects/LoginPage';
+import { SignUpPage } from '../PageObjects/SignUpPage';
 import { testData } from '../Common/TestData';
-import { MyAccountPage } from '../PageObject/MyAccountPage';
+import { MyAccountPage } from '../PageObjects/MyAccountPage';
 
     // Helper: navigate to the Login form
 async function openLoginForm(page) {
     await page.goto(URLs.pageLinkHomePage);
 
-    //const consentPopup = new ConsentPopup(page);
-    //await consentPopup.clickButtonConsent();
+    const consentPopup = new ConsentPopup(page);
+    await consentPopup.clickButtonConsent();
 
     const homePage = new HomePage(page);
     await expect(homePage.buttonLanguageEn).toBeVisible();
@@ -63,7 +63,7 @@ test('Login with valid credentials', async ({ page }) => {
 
     //Assertion 
     const addressLocator = page.frameLocator('iframe[title="My Addresses"]')
-        .locator('address[data-hook="formatted-address"]');
+        .locator('address[data-hook="formatted-address"]').first();
 
     await expect(addressLocator).toContainText(testData.userAddress.firstName);
 });

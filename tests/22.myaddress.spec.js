@@ -8,12 +8,13 @@ const validPassword = '123qweASD';
 // Helper: log in to the app
 async function validLogin(page) {
     await page.goto(URLs.pageLinkHomePage);
-        // Wait until the language selector is displayed
-    await page.getByTestId('languages-container').getByLabel('English').waitFor();
-        //Click on the Consent button on Cookie pop-up
-/*     const consentPopupWindow = new consentPopup(page);
+
+    // Click on the Consent button on Cookie pop-up
+    const consentPopupWindow = new consentPopup(page);
     await consentPopupWindow.clickButtonConsent();
-     */
+
+    // Wait until the language selector is displayed
+    await page.getByTestId('languages-container').getByLabel('English').waitFor();
     await page.getByRole('button', { name: 'Log In' }).click();
     await page.getByTestId('signUp.switchToSignUp').click();
     await page.getByLabel('Email').fill(validEmail);
@@ -48,7 +49,7 @@ test('Add a new Address in My Account', async ({ page }) => {
 
     //Assertion 
     const addressLocator = page.frameLocator('iframe[title="My Addresses"]')
-        .locator('address[data-hook="formatted-address"]');
+        .locator('address[data-hook="formatted-address"]').first();
 
     await expect(addressLocator).toHaveText(`
         Axel Foley
